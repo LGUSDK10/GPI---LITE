@@ -9,20 +9,7 @@ while True:
     print("5- Deletar problema\n") #Luiz Gustavo
     print("6- Gerar relatório\n") #Enzo
     print("0- Sair\n") #Antonio
-    opcao = input("Digite a opção desejada: ")
+    opcao = int(input("Digite a opção desejada: "))
 
-    if opcao == "1":
-
-    elif opcao == "2":
-
-    elif opcao == "3":
-
-    elif opcao == "4":
-
-    elif opcao == "5":
-
-    elif opcao == "6":
-
-    elif opcao == "0":
-
-    else:
+    if opcao == 4:
+        
