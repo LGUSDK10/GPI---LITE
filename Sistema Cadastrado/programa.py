@@ -43,10 +43,10 @@ while True:
         id = maior_id + 1
 
         # Registro do nome, matrícula, tipo, local e grau do problema
-        nome = input("Digite o seu nome: ")
+        nome = input("Digite o nome do usuário: ")
         print()
-
-        matricula = input("Digite a sua matrícula: ")
+        
+        nome_problema = input("Digite o nome do problema que você deseja cadastrar: ")  
         print()
 
         while True:
@@ -121,7 +121,6 @@ while True:
         cadastro = {
             "id": id,
             "nome": nome,
-            "matricula": matricula,
             "tipo": tipo,
             "local": local,
             "grau": grau
@@ -134,7 +133,9 @@ while True:
             json.dump(lista_problemas, arquivo, indent=4)
 
         print("Cadastro realizado com sucesso!\n")
-        print(cadastro)
+        print("O código do seu problema é:", id, "\n")
+        print("Dados do problema cadastrado:")
+        print("Usuário: ",nome, "| Tipo: ",tipo, "| Local: ",local, "| Grau: ",grau, "\n")
 
         
 
