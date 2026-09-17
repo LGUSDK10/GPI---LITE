@@ -207,7 +207,6 @@ while True:
                                 print("\nProblema encontrado:")
                                 print("ID:", problema["id"])
                                 print("Nome:", problema["nome"])
-                                print("Matrícula:", problema["matricula"])
                                 print("Tipo:", problema["tipo"])
                                 print("Local:", problema["local"])
                                 print("Grau:", problema["grau"])
