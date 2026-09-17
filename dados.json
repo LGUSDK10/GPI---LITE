@@ -19,5 +19,12 @@
         "tipo": "Hardware",
         "local": "Laborat\u00f3rio de Manuten\u00e7\u00e3o",
         "grau": "Complexo"
+    },
+    {
+        "id": 4,
+        "nome": "Ant\u00f4nio",
+        "tipo": "Hardware",
+        "local": "Sala de aula",
+        "grau": "M\u00e9dio"
     }
 ]
