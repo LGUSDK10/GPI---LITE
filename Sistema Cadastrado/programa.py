@@ -23,6 +23,9 @@ while True:
 
     if opcao == "1":
         print("="*69)
+        print("="*23,"CADASTRO DE PROBLEMA", "="*24)
+        print("="*69)
+        print()
         print("Responda as perguntas abaixo para cadastrar o problema:\n")
 
         # Carregando os registros existentes
@@ -137,7 +140,7 @@ while True:
         
     if opcao == "2":
         print("="*69)
-        print("="*25,"EXIBINDO PROBLEMAS", "="*24)
+        print("="*23,"EXIBIÇÃO DE PROBLEMAS", "="*23)
         print("="*69)
 
         try:
@@ -156,11 +159,11 @@ while True:
                     print("-"*69)
 
         except:
-            print("Nenhum problema cadastrado.\n")
+            print("Nenhum problema cadastrado até o momento.\n")
     
     if opcao == "3":
         print("="*69)
-        print("="*25,"PESQUISAR PROBLEMA","="*24)
+        print("="*23,"PESQUISA DE PROBLEMAS","="*23)
         print("="*69)
 
         try:
@@ -168,12 +171,13 @@ while True:
                 lista_problemas = json.load(arquivo)
 
             if len(lista_problemas) == 0:
-                print("Nenhum problema cadastrado.\n")
+                print("Nenhum problema cadastrado até o momento.\n")
 
             else:
                 while True:
-                    print("1- Pesquisar por ID")
-                    print("2- Pesquisar por nome")
+                    print("\nEscolha a forma de pesquisa:\n")
+                    print("1- Pesquisar por ID;")
+                    print("2- Pesquisar por nome;")
                     print("0- Voltar\n")
 
                     opcaopesquisa = input("Digite a opção desejada: ")
@@ -187,12 +191,15 @@ while True:
 
                         for problema in lista_problemas:
                             if problema["id"] == id_pesquisa:
-                                print("\nProblema encontrado:")
+                                print()
+                                print("-"*69)
+                                print("Problema encontrado:")
                                 print("ID:", problema["id"])
                                 print("Nome:", problema["nome"])
                                 print("Tipo:", problema["tipo"])
                                 print("Local:", problema["local"])
                                 print("Grau:", problema["grau"])
+                                print("-"*69)
                                 encontrou = True
 
                         if encontrou == False:
@@ -204,12 +211,15 @@ while True:
 
                         for problema in lista_problemas:
                             if problema["nome"] == nome_pesquisa:
-                                print("\nProblema encontrado:")
+                                print()
+                                print("-"*69)
+                                print("Problema encontrado:")
                                 print("ID:", problema["id"])
                                 print("Nome:", problema["nome"])
                                 print("Tipo:", problema["tipo"])
                                 print("Local:", problema["local"])
                                 print("Grau:", problema["grau"])
+                                print("-"*69)
                                 encontrou = True
 
                         if encontrou == False:
