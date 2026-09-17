@@ -137,13 +137,79 @@ while True:
         print("Dados do problema cadastrado:")
         print("Usuário: ",nome, "| Tipo: ",tipo, "| Local: ",local, "| Grau: ",grau, "\n")
 
+    if opcao == "4":
+        print("="*69)
+        print("="*25, "EDITAR PROBLEMA", "="*24)
+        print("="*69)
         
-
+        print("Responda as perguntas abaixo para editar o problema:\n")
+        print("Digite o código do problema que deseja editar: ")
+        id_editar = input() # Insirir o código do problema que deseja editar
+        with open('dados.json', 'r') as arquivo:
+            lista_problemas = json.load(arquivo)
         
-        
-            
-
-
-
-
-    
+        for problema in lista_problemas: # Percorre a lista de problemas cadastrados
+            if problema["id"] == int(id_editar):
+                print("Problema encontrado!\n")
+                print("Dados do problema cadastrado:")
+                print(f"Usuário: {problema['nome']} | Tipo: {problema['tipo']} | Local: {problema['local']} | Grau: {problema['grau']}\n")
+                print("Escolha o que deseja editar:\n")
+                print("1- Usuário;")
+                print("2- Tipo;")
+                print("3- Local;")
+                print("4- Grau;\n")
+                opcaoeditar = input("Digite a opção desejada: ")
+                print()
+                
+                if opcaoeditar == "1":
+                    problema["nome"] = input("Digite o novo nome do usuário: ")
+                    
+                elif opcaoeditar == "2":
+                    print("Escolha o novo tipo do problema: \n")
+                    print("1- Hardware;")
+                    print("2- Software;")
+                    print("3- Rede;")
+                    print("4- Outro;\n")
+                    opcaotipoeditar = input("Digite a opção desejada: ")
+                    print()
+                    if opcaotipoeditar == "1":
+                        problema["tipo"] = "Hardware"
+                    elif opcaotipoeditar == "2":
+                        problema["tipo"] = "Software"
+                    elif opcaotipoeditar == "3":
+                        problema["tipo"] = "Rede"
+                    elif opcaotipoeditar == "4":
+                        problema["tipo"] = input("Digite o novo tipo do problema: ")
+                        
+                elif opcaoeditar == "3":
+                    print("Escolha o novo local do problema:\n")
+                    print("1- Laboratório de Redes;")
+                    print("2- Laboratório de Manutenção;")
+                    print("3- Coordenação/Secretária;")
+                    print("4- Sala de aula;\n") 
+                    opcaolocaleditar = input("Digite a opção desejada: ")
+                    print()
+                    if opcaolocaleditar == "1":
+                        problema["local"] = "Laboratório de Redes"
+                    elif opcaolocaleditar == "2":
+                        problema["local"] = "Laboratório de Manutenção"
+                    elif opcaolocaleditar == "3":
+                        problema["local"] = "Coordenação/Secretária"
+                elif opcaoeditar == "4":
+                    print("Escolha o novo grau do problema: \n")
+                    print("1- Simples;")
+                    print("2- Médio;")
+                    print("3- Complexo;\n")
+                    opcaograueditar = input("Digite a opção desejada: ")
+                    print()
+                    if opcaograueditar == "1":
+                        problema["grau"] = "Simples"
+                    elif opcaograueditar == "2":
+                        problema["grau"] = "Médio"
+                    elif opcaograueditar == "3":
+                        problema["grau"] = "Complexo"
+            else:
+                print("Problema não encontrado!\n")
+                
+            with open('dados.json', 'w') as arquivo:
+                json.dump(lista_problemas, arquivo, indent=4)
