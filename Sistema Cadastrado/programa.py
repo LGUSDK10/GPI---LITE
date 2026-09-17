@@ -186,7 +186,7 @@ while True:
                         break
 
                     elif opcaopesquisa == "1":
-                        id_pesquisa = int(input("Digite o ID do problema: "))
+                        id_pesquisa = int(input("Digite o código do problema: "))
                         encontrou = False
 
                         for problema in lista_problemas:
@@ -194,7 +194,7 @@ while True:
                                 print()
                                 print("-"*69)
                                 print("Problema encontrado:")
-                                print("ID:", problema["id"])
+                                print("Código:", problema["id"])
                                 print("Nome:", problema["nome"])
                                 print("Tipo:", problema["tipo"])
                                 print("Local:", problema["local"])
@@ -214,7 +214,7 @@ while True:
                                 print()
                                 print("-"*69)
                                 print("Problema encontrado:")
-                                print("ID:", problema["id"])
+                                print("Código:", problema["id"])
                                 print("Nome:", problema["nome"])
                                 print("Tipo:", problema["tipo"])
                                 print("Local:", problema["local"])
