@@ -23,6 +23,8 @@ while True:
 
     if opcao == "1":
         print("="*69)
+        print("="*23, "CADASTRO DE PROBLEMAS", "="*23)
+        print("="*69, "\n")
         print("Responda as perguntas abaixo para cadastrar o problema:\n")
 
         # Carregando os registros existentes
