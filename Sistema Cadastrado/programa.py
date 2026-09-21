@@ -139,17 +139,25 @@ while True:
 
     if opcao == "4":
         print("="*69)
-        print("="*25, "EDITAR PROBLEMA", "="*24)
+        print("="*26, "EDITAR PROBLEMA", "="*25)
         print("="*69)
         
         print("Responda as perguntas abaixo para editar o problema:\n")
-        print("Digite o código do problema que deseja editar: ")
-        id_editar = input() # Insirir o código do problema que deseja editar
+        try:
+            id_editar = int(input("Digite o código do problema que deseja editar: "))
+        except ValueError:
+            # Evita que o programa encerre caso o usuário digite algo que não seja número
+            print("Código inválido! Digite apenas números.\n")
+            continue
+
         with open('dados.json', 'r') as arquivo:
-            lista_problemas = json.load(arquivo)
+            lista_problemas = json.load(arquivo) # Carrega os dados do arquivo JSON para uma lista de dicionários
+        encontrado = False  # Controla se o ID procurado foi encontrado
         
         for problema in lista_problemas: # Percorre a lista de problemas cadastrados
-            if problema["id"] == int(id_editar):
+            if problema["id"] == id_editar:
+                encontrado = True
+
                 print("Problema encontrado!\n")
                 print("Dados do problema cadastrado:")
                 print(f"Usuário: {problema['nome']} | Tipo: {problema['tipo']} | Local: {problema['local']} | Grau: {problema['grau']}\n")
@@ -195,6 +203,9 @@ while True:
                         problema["local"] = "Laboratório de Manutenção"
                     elif opcaolocaleditar == "3":
                         problema["local"] = "Coordenação/Secretária"
+                    elif opcaolocaleditar == "4":
+                        problema["local"] = "Sala de aula"
+
                 elif opcaoeditar == "4":
                     print("Escolha o novo grau do problema: \n")
                     print("1- Simples;")
@@ -208,8 +219,48 @@ while True:
                         problema["grau"] = "Médio"
                     elif opcaograueditar == "3":
                         problema["grau"] = "Complexo"
-            else:
-                print("Problema não encontrado!\n")
+                break # Como o ID é único, não precisamos continuar percorrendo a lista
+
+        if not encontrado:
+            print("Problema não encontrado!\n") # Só aparece se o for terminar sem encontrar o ID
                 
-            with open('dados.json', 'w') as arquivo:
-                json.dump(lista_problemas, arquivo, indent=4)
+        with open('dados.json', 'w') as arquivo:
+            json.dump(lista_problemas, arquivo, indent=4) # Salva a lista atualizada novamente no JSON
+
+    if opcao == "5":
+        print("="*69)
+        print("="*26, "DELETAR PROBLEMA", "="*25)
+        print("="*69)
+        
+        try:
+            id_deletar = int(input("Digite o código do problema que deseja deletar: "))
+        except ValueError:
+            # Trata uma entrada que não seja numérica
+            print("Código inválido! Digite apenas números.\n")
+            continue
+
+        with open('dados.json', 'r') as arquivo: # Carrega os problemas armazenados no JSON
+            lista_problemas = json.load(arquivo)
+        encontrado = False
+        
+        for problema in lista_problemas: # Percorre a lista de problemas cadastrados
+            if problema["id"] == id_deletar:
+                encontrado = True
+
+                print("Problema encontrado!\n")
+                print("Dados do problema cadastrado:")
+                print(f"Usuário: {problema['nome']} | Tipo: {problema['tipo']} | Local: {problema['local']} | Grau: {problema['grau']}\n")
+                print("Deseja realmente deletar este problema? (S/N)")
+                opcao_deletar = input().upper() # Converte a resposta para maiúscula para aceitar "s" ou "S"
+                if opcao_deletar == "S":
+                    lista_problemas.remove(problema)
+                    print("Problema deletado com sucesso!\n")
+                else:
+                    print("Operação cancelada!\n")
+                break
+
+        if not encontrado:
+            print("Problema não encontrado!\n")
+                
+        with open('dados.json', 'w') as arquivo:
+            json.dump(lista_problemas, arquivo, indent=4) # Salva o JSON depois da possível exclusão
