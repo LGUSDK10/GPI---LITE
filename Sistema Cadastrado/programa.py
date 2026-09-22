@@ -23,6 +23,8 @@ while True:
 
     if opcao == "1":
         print("="*69)
+        print("="*23, "CADASTRO DE PROBLEMAS", "="*23)
+        print("="*69, "\n")
         print("Responda as perguntas abaixo para cadastrar o problema:\n")
 
         # Carregando os registros existentes
@@ -137,9 +139,102 @@ while True:
         print("Dados do problema cadastrado:")
         print("Usuário: ",nome, "| Tipo: ",tipo, "| Local: ",local, "| Grau: ",grau, "\n")
 
+    if opcao == "2":
+        print("="*69)
+        print("="*23,"EXIBIÇÃO DE PROBLEMAS", "="*23)
+        print("="*69)
+
+        try:
+            with open("dados.json", "r") as arquivo:
+                lista_problemas = json.load(arquivo)
+
+            if len(lista_problemas) == 0:
+                print("Nenhum problema cadastrado.\n")
+            else:
+                for problema in lista_problemas:
+                    print("ID:", problema["id"])
+                    print("Nome:", problema["nome"])
+                    print("Tipo:", problema["tipo"])
+                    print("Local:", problema["local"])
+                    print("Grau:", problema["grau"])
+                    print("-"*69)
+
+        except:
+            print("Nenhum problema cadastrado até o momento.\n")
+    
+    if opcao == "3":
+        print("="*69)
+        print("="*23,"PESQUISA DE PROBLEMAS","="*23)
+        print("="*69)
+
+        try:
+            with open("dados.json", "r") as arquivo:
+                lista_problemas = json.load(arquivo)
+
+            if len(lista_problemas) == 0:
+                print("Nenhum problema cadastrado até o momento.\n")
+
+            else:
+                while True:
+                    print("\nEscolha a forma de pesquisa:\n")
+                    print("1- Pesquisar por ID;")
+                    print("2- Pesquisar por nome;")
+                    print("0- Voltar\n")
+
+                    opcaopesquisa = input("Digite a opção desejada: ")
+
+                    if opcaopesquisa == "0":
+                        break
+
+                    elif opcaopesquisa == "1":
+                        id_pesquisa = int(input("Digite o código do problema: "))
+                        encontrou = False
+
+                        for problema in lista_problemas:
+                            if problema["id"] == id_pesquisa:
+                                print()
+                                print("-"*69)
+                                print("Problema encontrado:")
+                                print("Código:", problema["id"])
+                                print("Nome:", problema["nome"])
+                                print("Tipo:", problema["tipo"])
+                                print("Local:", problema["local"])
+                                print("Grau:", problema["grau"])
+                                print("-"*69)
+                                encontrou = True
+
+                        if encontrou == False:
+                            print("Problema não encontrado.")
+
+                    elif opcaopesquisa == "2":
+                        nome_pesquisa = input("Digite o nome: ")
+                        encontrou = False
+
+                        for problema in lista_problemas:
+                            if problema["nome"] == nome_pesquisa:
+                                print()
+                                print("-"*69)
+                                print("Problema encontrado:")
+                                print("Código:", problema["id"])
+                                print("Nome:", problema["nome"])
+                                print("Tipo:", problema["tipo"])
+                                print("Local:", problema["local"])
+                                print("Grau:", problema["grau"])
+                                print("-"*69)
+                                encontrou = True
+
+                        if encontrou == False:
+                            print("Problema não encontrado.")
+
+                    else:
+                        print("Opção inválida!\n")
+
+        except:
+            print("Nenhum problema cadastrado.\n")
+
     if opcao == "4":
         print("="*69)
-        print("="*26, "EDITAR PROBLEMA", "="*25)
+        print("="*25, "EDIÇÃO DE PROBLEMA", "="*24)
         print("="*69)
         
         print("Responda as perguntas abaixo para editar o problema:\n")
@@ -159,8 +254,13 @@ while True:
                 encontrado = True
 
                 print("Problema encontrado!\n")
+                print("-"*69)
                 print("Dados do problema cadastrado:")
-                print(f"Usuário: {problema['nome']} | Tipo: {problema['tipo']} | Local: {problema['local']} | Grau: {problema['grau']}\n")
+                print("Nome:", problema["nome"])
+                print("Tipo:", problema["tipo"])
+                print("Local:", problema["local"])
+                print("Grau:", problema["grau"])
+                print("-"*69)
                 print("Escolha o que deseja editar:\n")
                 print("1- Usuário;")
                 print("2- Tipo;")
@@ -226,6 +326,13 @@ while True:
                 
         with open('dados.json', 'w') as arquivo:
             json.dump(lista_problemas, arquivo, indent=4) # Salva a lista atualizada novamente no JSON
+        print("-"*69)
+        print("Problema atualizado com sucesso!\n")
+        print("Nome:", problema["nome"])
+        print("Tipo:", problema["tipo"])
+        print("Local:", problema["local"])
+        print("Grau:", problema["grau"])
+        print("-"*69)
 
     if opcao == "5":
         print("="*69)
@@ -248,8 +355,13 @@ while True:
                 encontrado = True
 
                 print("Problema encontrado!\n")
+                print("-"*69)
                 print("Dados do problema cadastrado:")
-                print(f"Usuário: {problema['nome']} | Tipo: {problema['tipo']} | Local: {problema['local']} | Grau: {problema['grau']}\n")
+                print("Nome:", problema["nome"])
+                print("Tipo:", problema["tipo"])
+                print("Local:", problema["local"])
+                print("Grau:", problema["grau"])
+                print("-"*69)
                 print("Deseja realmente deletar este problema? (S/N)")
                 opcao_deletar = input().upper() # Converte a resposta para maiúscula para aceitar "s" ou "S"
                 if opcao_deletar == "S":
@@ -264,3 +376,4 @@ while True:
                 
         with open('dados.json', 'w') as arquivo:
             json.dump(lista_problemas, arquivo, indent=4) # Salva o JSON depois da possível exclusão
+        print("Operação concluída!\n")
