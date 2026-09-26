@@ -1,0 +1,33 @@
+=====================================================================
+                 RELATÓRIO DE PROBLEMAS CADASTRADOS                  
+=====================================================================
+
+ID: 1
+Nome do Usuário: Antônio V.
+Descrição: Projetor
+Tipo: Hardware
+Local: Laboratório de Redes
+Grau: Simples
+---------------------------------------------------------------------
+ID: 2
+Nome do Usuário: Roberto
+Descrição: Monitor não liga
+Tipo: Hardware
+Local: Laboratório de Redes
+Grau: Médio
+---------------------------------------------------------------------
+
+=====================================================================
+Total de problemas registrados: 2
+
+--- POR TIPO DE PROBLEMA ---
+Hardware: 2 (100.0%)
+Software: 0 (0.0%)
+Rede: 0 (0.0%)
+Outro: 0 (0.0%)
+
+--- POR GRAU DE COMPLEXIDADE ---
+Simples: 1 (50.0%)
+Médio: 1 (50.0%)
+Complexo: 0 (0.0%)
+=====================================================================
