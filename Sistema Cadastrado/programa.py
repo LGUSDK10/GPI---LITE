@@ -537,7 +537,7 @@ while True:
             time.sleep(1)
 
     if opcao == "6":
-        # Gera um relatório com todos os problemas cadastrados e informa estatísticas sobre eles
+        # Exporta os dados cadastrados no JSON para o arquivo relatorio.txt e exibe na tela
         # Membro responsável pela explicação: Enzo
         print("=" * 69)
         print("=" * 23, "GERAÇÃO DE RELATÓRIO", "=" * 24)
@@ -550,126 +550,46 @@ while True:
         except:
             lista_problemas = []
 
-        houve_alteracao = False
-
-        # Verifica se algum problema está sem descrição
-        for problema in lista_problemas:
-            descricao = problema.get('nomeproblema')
-
-            if not descricao or str(descricao).strip() == "N/A":
-                print("-" * 69)
-                print(f"O problema ID {problema['id']} (Usuário: {problema['nome']}) não tem descrição.")
-                nova_desc = input("Digite a descrição/título deste problema: ")
-                problema['nomeproblema'] = nova_desc
-                houve_alteracao = True
-                print("Descrição adicionada com sucesso!\n")
-                time.sleep(1)
-
-        if houve_alteracao:
-            with open("dados.json", "w", encoding="utf-8") as arquivo:
-                json.dump(lista_problemas, arquivo, indent=4, ensure_ascii=False)
-
-        print("Gerando relatório...")
-        time.sleep(1.5)
-
-        # Montagem do relatório
-        texto_relatorio = "=" * 69 + "\n"
-        texto_relatorio += f"{'RELATÓRIO DE PROBLEMAS CADASTRADOS':^69}\n"
-        texto_relatorio += "=" * 69 + "\n\n"
-
-        qtde_hardware = 0
-        qtde_software = 0
-        qtde_rede = 0
-        qtde_outro = 0
-        qtde_simples = 0
-        qtde_medio = 0
-        qtde_complexo = 0
-
-        # Função simples para corrigir a exibição dos acentos na tela e no relatório
-        def fix_txt(txt):
-            if isinstance(txt, str):
-                try:
-                    return txt.encode('latin1').decode('utf-8')
-                except:
-                    return txt
-            return txt
-
         if len(lista_problemas) == 0:
-            texto_relatorio += "Nenhum problema cadastrado até o momento.\n\n"
+            print("Nenhum problema cadastrado ate o momento para gerar o relatorio.\n")
+            time.sleep(1.5)
         else:
-            for problema in lista_problemas:
-                desc = fix_txt(problema.get('nomeproblema', 'Não informado'))
-                nome = fix_txt(problema.get('nome', ''))
-                local = fix_txt(problema.get('local', ''))
-                tipo = fix_txt(problema.get('tipo', ''))
-                grau = fix_txt(problema.get('grau', ''))
+            print("Gerando relatório...")
+            time.sleep(1)
 
-                texto_relatorio += f"ID: {problema['id']}\n"
-                texto_relatorio += f"Nome do Usuário: {nome}\n"
-                texto_relatorio += f"Descrição: {desc}\n"
-                texto_relatorio += f"Tipo: {tipo}\n"
-                texto_relatorio += f"Local: {local}\n"
-                texto_relatorio += f"Grau: {grau}\n"
-                texto_relatorio += "-" * 69 + "\n"
+            # Abertura do arquivo TXT com encoding utf-8
+            with open("relatorio.txt", "w", encoding="utf-8") as arq_relatorio:
 
-                # Estatísticas por tipo de problema
-                tipo_str = str(tipo).strip().capitalize()
+                print("=" * 69)
+                print("                 RELATÓRIO DE PROBLEMAS CADASTRADOS                  ")
+                print("=" * 69)
+                print()
 
-                if tipo_str == "Hardware":
-                    qtde_hardware += 1
-                elif tipo_str == "Software":
-                    qtde_software += 1
-                elif tipo_str == "Rede":
-                    qtde_rede += 1
-                else:
-                    qtde_outro += 1
+                arq_relatorio.write("=====================================================================\n")
+                arq_relatorio.write("                 RELATÓRIO DE PROBLEMAS CADASTRADOS                  \n")
+                arq_relatorio.write("=====================================================================\n\n")
 
-                # Estatísticas por grau de complexidade
-                grau_str = str(grau).strip().capitalize()
+                for problema in lista_problemas:
+                    print("Codigo:", problema["id"])
+                    print("Nome:", problema["nome"])
+                    print("Nome do problema:", problema["nomeproblema"])
+                    print("Tipo:", problema["tipo"])
+                    print("Local:", problema["local"])
+                    print("Grau:", problema["grau"])
+                    print("-" * 69)
 
-                if grau_str == "Simples":
-                    qtde_simples += 1
-                elif grau_str in ["Médio", "Medio"]:
-                    qtde_medio += 1
-                elif grau_str == "Complexo":
-                    qtde_complexo += 1
+                    arq_relatorio.write("Codigo: " + str(problema["id"]) + "\n")
+                    arq_relatorio.write("Nome: " + str(problema["nome"]) + "\n")
+                    arq_relatorio.write("Nome do problema: " + str(problema["nomeproblema"]) + "\n")
+                    arq_relatorio.write("Tipo: " + str(problema["tipo"]) + "\n")
+                    arq_relatorio.write("Local: " + str(problema["local"]) + "\n")
+                    arq_relatorio.write("Grau: " + str(problema["grau"]) + "\n")
+                    arq_relatorio.write("---------------------------------------------------------------------\n")
 
-        total_problemas = len(lista_problemas)
-
-        # Cálculo das porcentagens, evitando divisão por zero
-        pct_hw = (qtde_hardware / total_problemas * 100) if total_problemas > 0 else 0.0
-        pct_sw = (qtde_software / total_problemas * 100) if total_problemas > 0 else 0.0
-        pct_rd = (qtde_rede / total_problemas * 100) if total_problemas > 0 else 0.0
-        pct_ot = (qtde_outro / total_problemas * 100) if total_problemas > 0 else 0.0
-
-        pct_simples = (qtde_simples / total_problemas * 100) if total_problemas > 0 else 0.0
-        pct_medio = (qtde_medio / total_problemas * 100) if total_problemas > 0 else 0.0
-        pct_complexo = (qtde_complexo / total_problemas * 100) if total_problemas > 0 else 0.0
-
-        # Resumo estatístico final
-        texto_relatorio += "\n" + "=" * 69 + "\n"
-        texto_relatorio += f"Total de problemas registrados: {total_problemas}\n\n"
-        texto_relatorio += "--- POR TIPO DE PROBLEMA ---\n"
-        texto_relatorio += f"Hardware: {qtde_hardware} ({pct_hw:.1f}%)\n"
-        texto_relatorio += f"Software: {qtde_software} ({pct_sw:.1f}%)\n"
-        texto_relatorio += f"Rede: {qtde_rede} ({pct_rd:.1f}%)\n"
-        texto_relatorio += f"Outro: {qtde_outro} ({pct_ot:.1f}%)\n\n"
-        texto_relatorio += "--- POR GRAU DE COMPLEXIDADE ---\n"
-        texto_relatorio += f"Simples: {qtde_simples} ({pct_simples:.1f}%)\n"
-        texto_relatorio += f"Médio: {qtde_medio} ({pct_medio:.1f}%)\n"
-        texto_relatorio += f"Complexo: {qtde_complexo} ({pct_complexo:.1f}%)\n"
-        texto_relatorio += "=" * 69 + "\n"
-
-        # Salva o arquivo relatorio.txt
-        with open("relatorio.txt", "w", encoding="utf-8") as arq_relatorio:
-            arq_relatorio.write(texto_relatorio)
-
-        # Exibe o relatório no terminal
-        print(texto_relatorio)
-        print("Relatório exportado com sucesso para 'relatorio.txt'!\n")
-        time.sleep(2)
+            print("Relatorio exportado com sucesso para 'relatorio.txt'!\n")
+            time.sleep(2)
 
 # Utilização de IA para testes do código, buscas por erros e sugestões de melhorias e novas estruturas.
-# A lógica, organização e estética do código foram 100% desenvolvidas pelos membros.
-# Agradecemos a todos pela a atenção!
+# A lógica, organização e estética do código foram desenvolvidas pelos membros.
+# Agradecemos a todos pela atenção!
 # Atenciosamente, equipe COSMOBYTE!
