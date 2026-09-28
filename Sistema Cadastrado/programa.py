@@ -541,55 +541,154 @@ while True:
     if opcao == "6":
         # Exporta os dados cadastrados no JSON para o arquivo relatorio.txt e exibe na tela
         # Membro responsável pela explicação: Enzo
+        
+        # Desenha o cabeçalho da opção no terminal.
         print("=" * 69)
-        print("=" * 23, "GERAÇÃO DE RELATÓRIO", "=" * 24)
+        print("=" * 23, "GERACAO DE RELATORIO", "=" * 24)
         print("=" * 69)
         print()
 
         try:
+            # Abre o arquivo de cadastros para leitura usando a codificação UTF-8.
             with open("dados.json", "r", encoding="utf-8") as arquivo:
+                # Converte o conteúdo JSON em uma lista de problemas.
                 lista_problemas = json.load(arquivo)
         except:
+            # Se ocorrer um erro ao abrir ou ler o JSON, considera que não há cadastros.
             lista_problemas = []
 
+        # Se a lista estiver vazia, informa que não há dados para incluir no relatório.
         if len(lista_problemas) == 0:
             print("Nenhum problema cadastrado ate o momento para gerar o relatorio.\n")
+            # Aguarda antes de voltar ao menu.
             time.sleep(1.5)
         else:
-            print("Gerando relatório...")
+            # Informa que o relatório está sendo preparado.
+            print("Gerando relatorio...")
             time.sleep(1)
 
-            # Abertura do arquivo TXT com encoding utf-8
+            # Cria dicionários para contar problemas por tipo, grau e local.
+            contagem_tipo = {}
+            contagem_grau = {}
+            contagem_local = {}
+
+            # Guarda o número total de cadastros, usado nas porcentagens.
+            total_problemas = len(lista_problemas)
+
+            # Percorre os cadastros para contar quantas vezes cada categoria aparece.
+            for problema in lista_problemas:
+                # Obtém o tipo como texto e soma uma ocorrência à contagem correspondente.
+                tipo = str(problema["tipo"])
+                if tipo in contagem_tipo:
+                    contagem_tipo[tipo] = contagem_tipo[tipo] + 1
+                else:
+                    contagem_tipo[tipo] = 1
+
+                # Obtém o grau e atualiza sua contagem.
+                grau = str(problema["grau"])
+                if grau in contagem_grau:
+                    contagem_grau[grau] = contagem_grau[grau] + 1
+                else:
+                    contagem_grau[grau] = 1
+
+                # Obtém o local e atualiza sua contagem.
+                local = str(problema["local"])
+                if local in contagem_local:
+                    contagem_local[local] = contagem_local[local] + 1
+                else:
+                    contagem_local[local] = 1
+
+            # Abre o relatório para escrita; o modo "w" substitui o relatório anterior.
             with open("relatorio.txt", "w", encoding="utf-8") as arq_relatorio:
 
+                # Exibe o título do relatório no terminal.
                 print("=" * 69)
-                print("                 RELATÓRIO DE PROBLEMAS CADASTRADOS                  ")
+                print("                 RELATORIO DE PROBLEMAS CADASTRADOS                  ")
                 print("=" * 69)
                 print()
 
+                # Grava o mesmo título no arquivo de relatório.
                 arq_relatorio.write("=====================================================================\n")
-                arq_relatorio.write("                 RELATÓRIO DE PROBLEMAS CADASTRADOS                  \n")
+                arq_relatorio.write("                 RELATORIO DE PROBLEMAS CADASTRADOS                  \n")
                 arq_relatorio.write("=====================================================================\n\n")
 
+                # Percorre novamente os cadastros para apresentar seus dados completos.
                 for problema in lista_problemas:
-                    print("Codigo:", problema["id"])
-                    print("Nome:", problema["nome"])
-                    print("Nome do problema:", problema["nomeproblema"])
-                    print("Tipo:", problema["tipo"])
-                    print("Local:", problema["local"])
-                    print("Grau:", problema["grau"])
+                    # Converte os campos do cadastro para texto para montar as linhas.
+                    p_id = str(problema["id"])
+                    p_nome = str(problema["nome"])
+                    p_nomeprob = str(problema["nomeproblema"])
+                    p_tipo = str(problema["tipo"])
+                    p_local = str(problema["local"])
+                    p_grau = str(problema["grau"])
+
+                    # Mostra os dados deste problema no terminal.
+                    print("Codigo:", p_id)
+                    print("Nome:", p_nome)
+                    print("Nome do problema:", p_nomeprob)
+                    print("Tipo:", p_tipo)
+                    print("Local:", p_local)
+                    print("Grau:", p_grau)
                     print("-" * 69)
 
-                    arq_relatorio.write("Codigo: " + str(problema["id"]) + "\n")
-                    arq_relatorio.write("Nome: " + str(problema["nome"]) + "\n")
-                    arq_relatorio.write("Nome do problema: " + str(problema["nomeproblema"]) + "\n")
-                    arq_relatorio.write("Tipo: " + str(problema["tipo"]) + "\n")
-                    arq_relatorio.write("Local: " + str(problema["local"]) + "\n")
-                    arq_relatorio.write("Grau: " + str(problema["grau"]) + "\n")
+                    # Grava os mesmos dados no arquivo, uma informação por linha.
+                    arq_relatorio.write("Codigo: " + p_id + "\n")
+                    arq_relatorio.write("Nome: " + p_nome + "\n")
+                    arq_relatorio.write("Nome do problema: " + p_nomeprob + "\n")
+                    arq_relatorio.write("Tipo: " + p_tipo + "\n")
+                    arq_relatorio.write("Local: " + p_local + "\n")
+                    arq_relatorio.write("Grau: " + p_grau + "\n")
+                    # Separa visualmente um cadastro do próximo.
                     arq_relatorio.write("---------------------------------------------------------------------\n")
 
-            print("Relatorio exportado com sucesso para 'relatorio.txt'!\n")
-            time.sleep(2)
+                # Inicia a seção de estatísticas no terminal.
+                print("\n" + "=" * 69)
+                print("                      PORCENTAGEM E ESTATISTICAS                     ")
+                print("=" * 69)
+                print("Total de registros: " + str(total_problemas) + "\n")
+
+                # Grava o título da seção e o total de problemas no arquivo.
+                arq_relatorio.write("\n=====================================================================\n")
+                arq_relatorio.write("                      PORCENTAGEM E ESTATISTICAS                     \n")
+                arq_relatorio.write("=====================================================================\n")
+                arq_relatorio.write("Total de registros: " + str(total_problemas) + "\n\n")
+
+                # Exibe e grava a quantidade e a porcentagem de cada tipo.
+                print("--- PORCENTAGEM POR TIPO ---")
+                arq_relatorio.write("--- PORCENTAGEM POR TIPO ---\n")
+                for chave in contagem_tipo:
+                    # Recupera quantos problemas pertencem a este tipo.
+                    qtd = contagem_tipo[chave]
+                    # Calcula a porcentagem e a corta para duas casas decimais.
+                    porcentagem = (qtd * 10000 // total_problemas) / 100
+                    # Monta a linha com categoria, porcentagem, quantidade e total.
+                    linha = str(chave) + ": " + str(porcentagem) + "% (" + str(qtd) + " de " + str(total_problemas) + ")"
+                    print(linha)
+                    arq_relatorio.write(linha + "\n")
+
+                # Exibe e grava a quantidade e a porcentagem de cada grau.
+                print("\n--- PORCENTAGEM POR GRAU ---")
+                arq_relatorio.write("\n--- PORCENTAGEM POR GRAU ---\n")
+                for chave in contagem_grau:
+                    qtd = contagem_grau[chave]
+                    porcentagem = (qtd * 10000 // total_problemas) / 100
+                    linha = str(chave) + ": " + str(porcentagem) + "% (" + str(qtd) + " de " + str(total_problemas) + ")"
+                    print(linha)
+                    arq_relatorio.write(linha + "\n")
+
+                # Exibe e grava a quantidade e a porcentagem de cada local.
+                print("\n--- PORCENTAGEM POR LOCAL ---")
+                arq_relatorio.write("\n--- PORCENTAGEM POR LOCAL ---\n")
+                for chave in contagem_local:
+                    qtd = contagem_local[chave]
+                    porcentagem = (qtd * 10000 // total_problemas) / 100
+                    linha = str(chave) + ": " + str(porcentagem) + "% (" + str(qtd) + " de " + str(total_problemas) + ")"
+                    print(linha)
+                    arq_relatorio.write(linha + "\n")
+
+            # Confirma que o relatório terminou de ser gravado e aguarda antes do menu.
+            print("\nRelatorio exportado com sucesso para 'relatorio.txt'!\n")
+            time.sleep(3)
 
 # Utilização de IA para testes do código, buscas por erros e sugestões de melhorias e novas estruturas.
 # A lógica, organização e estética do código foram desenvolvidas pelos membros.
