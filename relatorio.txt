@@ -16,3 +16,27 @@ Tipo: Hardware
 Local: Laboratório de Redes
 Grau: Médio
 ---------------------------------------------------------------------
+Codigo: 3
+Nome: Mariana
+Nome do problema: Teclado danificado
+Tipo: Hardware
+Local: Laboratório de Manutenção
+Grau: Complexo
+---------------------------------------------------------------------
+
+=====================================================================
+                      PORCENTAGEM E ESTATISTICAS                     
+=====================================================================
+Total de registros: 3
+
+--- PORCENTAGEM POR TIPO ---
+Hardware: 100.0% (3 de 3)
+
+--- PORCENTAGEM POR GRAU ---
+Simples: 33.33% (1 de 3)
+Médio: 33.33% (1 de 3)
+Complexo: 33.33% (1 de 3)
+
+--- PORCENTAGEM POR LOCAL ---
+Laboratório de Redes: 66.66% (2 de 3)
+Laboratório de Manutenção: 33.33% (1 de 3)
