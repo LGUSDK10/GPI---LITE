@@ -188,131 +188,133 @@ while True:
         print("-"*69)
         time.sleep(2)
 
-    if opcao == "2":
+
+    if opcao == "2":  # Verifica se a opção escolhida pelo usuário foi 2
         # Exibe todos os problemas cadastrados
         # Membro responsável pela explicação: Luiz Carlos
-        print("="*69)
-        print("="*23,"EXIBIÇÃO DE PROBLEMAS", "="*23)
-        print("="*69)
-        time.sleep(0.5)
+        print("="*69)  
+        print("="*23,"EXIBIÇÃO DE PROBLEMAS", "="*23) 
+        print("="*69)  
+        time.sleep(0.5)  # Faz o programa esperar 0,5 segundo
 
-        try:
-            with open("dados.json", "r") as arquivo:
-                lista_problemas = json.load(arquivo)
+        try:  # Tenta executar os comandos que podem apresentar erro
+            with open("dados.json", "r") as arquivo:  # Abre o arquivo dados.json para leitura
+                lista_problemas = json.load(arquivo)  # Lê os dados do arquivo e transforma em lista
 
-            if len(lista_problemas) == 0:
-                print("Nenhum problema cadastrado.\n")
-                time.sleep(1.5)
-            else:
-                for problema in lista_problemas:
-                    print("Código:", problema["id"])
-                    print("Nome:", problema["nome"])
-                    print("Nome do problema:", problema["nomeproblema"])
-                    print("Tipo:", problema["tipo"])
-                    print("Local:", problema["local"])
-                    print("Grau:", problema["grau"])
-                    print("-"*69)
+            if len(lista_problemas) == 0:  # Verifica se a lista está vazia
+                print("Nenhum problema cadastrado.\n") 
+                time.sleep(1.5)  # Espera 1,5 segundo
+            else:  # Executa caso existam problemas cadastrados
+                for problema in lista_problemas: 
+                    print("Código:", problema["id"])  
+                    print("Nome:", problema["nome"])  
+                    print("Nome do problema:", problema["nomeproblema"])  
+                    print("Tipo:", problema["tipo"])  
+                    print("Local:", problema["local"])  
+                    print("Grau:", problema["grau"]) 
+                    print("-"*69) 
 
-        except:
-            print("Nenhum problema cadastrado até o momento.\n")
-            time.sleep(1.5)
+        except:  # Executa caso aconteça algum erro na leitura do arquivo
+            print("Nenhum problema cadastrado até o momento.\n")  
+            time.sleep(1.5)  # Espera 1,5 segundo
     
-    if opcao == "3":
+    if opcao == "3":  
         # Pesquisa os problemas cadastrados por código ou nome
         # Membro responsável pela explicação: Luiz Carlos
-        print("="*69)
-        print("="*23,"PESQUISA DE PROBLEMAS","="*23)
-        print("="*69)
-        time.sleep(0.5)
+        print("="*69) 
+        print("="*23,"PESQUISA DE PROBLEMAS","="*23)  
+        print("="*69) 
+        time.sleep(0.5)  # Faz o programa esperar 0,5 segundo
 
-        try:
-            with open("dados.json", "r") as arquivo:
-                lista_problemas = json.load(arquivo)
+        try:  # Tenta executar os comandos que podem apresentar erro
+            with open("dados.json", "r") as arquivo:  # Abre o arquivo dados.json para leitura
+                lista_problemas = json.load(arquivo)  # Lê os dados do arquivo e transforma em lista
 
-                if len(lista_problemas) == 0:
-                    print("Nenhum problema cadastrado até o momento.\n")
-                    time.sleep(1.5)
+            if len(lista_problemas) == 0:  # Verifica se a lista está vazia
+                print("Nenhum problema cadastrado até o momento.\n")  
+                time.sleep(1.5)  # Espera 1,5 segundo
 
-                else:
-                    while True:
-                        print("\nEscolha a forma de pesquisa:\n")
-                        print("1- Pesquisar por código;")
-                        print("2- Pesquisar por nome;")
-                        print("0- Voltar\n")
+            else:  # Executa caso existam problemas cadastrados
+                while True:  # Mantém o menu de pesquisa funcionando até o usuário escolher voltar
+                    print("\nEscolha a forma de pesquisa:\n")  #
+                    print("1- Pesquisar por código;")  
+                    print("2- Pesquisar por nome;")  
+                    print("0- Voltar\n")  
 
-                        opcaopesquisa = input("Digite a opção desejada: ")
+                    opcaopesquisa = input("Digite a opção desejada: ")  # Recebe a opção escolhida pelo usuário
 
-                        if opcaopesquisa == "0":
-                            break
+                    if opcaopesquisa == "0":  # Verifica se o usuário escolheu voltar
+                        break  # Encerra o while e volta para o menu anterior
 
-                        elif opcaopesquisa == "1":
+                    elif opcaopesquisa == "1":  # Verifica se o usuário escolheu pesquisar pelo código
 
-                            try:
-                                id_pesquisa = int(input("Digite o código do problema: "))
-                            except ValueError:
-                                print("Código inválido! Digite apenas números.\n")
-                                time.sleep(1)
-                                continue
+                        try:  # Tenta converter o código digitado para número
+                            id_pesquisa = int(input("Digite o código do problema: "))  # Recebe o código e transforma em inteiro
+                        except ValueError:  # Trata o erro caso o usuário não digite um número
+                            print("Código inválido! Digite apenas números.\n")  # Mostra uma mensagem de erro
+                            time.sleep(1)  # Espera 1 segundo
+                            continue  # Volta para o início do while
 
-                            encontrou = False
+                        encontrou = False  # Começa considerando que nenhum problema foi encontrado
 
-                            for problema in lista_problemas:
-                                if problema["id"] == id_pesquisa:
-                                    print()
-                                    print("-"*69)
-                                    print("Problema encontrado:")
-                                    print("Código:", problema["id"])
-                                    print("Nome:", problema["nome"])
-                                    print("Nome do problema:", problema["nomeproblema"])
-                                    print("Tipo:", problema["tipo"])
-                                    print("Local:", problema["local"])
-                                    print("Grau:", problema["grau"])
-                                    print("-"*69)
+                        for problema in lista_problemas:  # Percorre todos os problemas cadastrados
+                            if problema["id"] == id_pesquisa:  # Compara o código cadastrado com o código pesquisado
+                                print() 
+                                print("-"*69)
+                                print("Problema encontrado:")  
+                                print("Código:", problema["id"])  
+                                print("Nome:", problema["nome"])  
+                                print("Nome do problema:", problema["nomeproblema"])  
+                                print("Tipo:", problema["tipo"])  
+                                print("Local:", problema["local"])  
+                                print("Grau:", problema["grau"])
+                                print("-"*69)  
 
-                                    encontrou = True
+                                encontrou = True  # Informa que um problema foi encontrado
 
-                            if encontrou == False:
-                                print("Problema não encontrado.")
+                        if encontrou == False:  # Verifica se nenhum problema foi encontrado
+                            print("Problema não encontrado.")  
 
-                            time.sleep(1.5)
+                        time.sleep(1.5)  # Espera 1,5 segundo
 
-                        elif opcaopesquisa == "2":
+                    elif opcaopesquisa == "2":  # Verifica se o usuário escolheu pesquisar pelo nome
 
-                            nome_pesquisa = input("Digite o nome: ")
+                        nome_pesquisa = input("Digite o nome: ")  # Recebe o nome que será pesquisado
 
-                            while not nome_pesquisa.strip():
-                                print("O nome não pode ficar vazio!")
-                                nome_pesquisa = input("Digite o nome: ")
+                        while not nome_pesquisa.strip():  # Verifica se o nome está vazio ou contém apenas espaços
+                            print("O nome não pode ficar vazio!")  # Mostra uma mensagem de erro
+                            nome_pesquisa = input("Digite o nome: ")  # Pede o nome novamente
 
-                            encontrou = False
+                        encontrou = False  # Começa considerando que nenhum problema foi encontrado
 
-                            for problema in lista_problemas:
-                                if problema["nome"] == nome_pesquisa:
-                                    print()
-                                    print("-"*69)
-                                    print("Problema encontrado:")
-                                    print("Código:", problema["id"])
-                                    print("Nome:", problema["nome"])
-                                    print("Nome do problema:", problema["nomeproblema"])
-                                    print("Tipo:", problema["tipo"])
-                                    print("Local:", problema["local"])
-                                    print("Grau:", problema["grau"])
-                                    print("-"*69)
+                        for problema in lista_problemas:  # Percorre todos os problemas cadastrados
+                            if problema["nome"] == nome_pesquisa:  # Compara o nome cadastrado com o nome pesquisado
+                                print() 
+                                print("-"*69)
+                                print("Problema encontrado:") 
+                                print("Código:", problema["id"])  
+                                print("Nome:", problema["nome"])  
+                                print("Nome do problema:", problema["nomeproblema"])  
+                                print("Tipo:", problema["tipo"])  
+                                print("Local:", problema["local"]) 
+                                print("Grau:", problema["grau"])  
+                                print("-"*69)  
 
-                                    encontrou = True
+                                encontrou = True  # Informa que um problema foi encontrado
 
-                            if encontrou == False:
-                                print("Problema não encontrado.")
+                        if encontrou == False:  # Verifica se nenhum problema foi encontrado
+                            print("Problema não encontrado.")  # Informa que não encontrou o problema
 
-                            time.sleep(1.5)
+                        time.sleep(1.5)  # Espera 1,5 segundo
 
-                        else:
-                            print("Opção inválida!\n")
-                            time.sleep(1)
+                    else:  # Executa caso o usuário digite uma opção que não existe
+                        print("Opção inválida!\n")  # Informa que a opção é inválida
+                        time.sleep(1)  # Espera 1 segundo
 
-        except:
-            print("Nenhum problema cadastrado.\n")
-            time.sleep(1.5)
+        except:  # Executa caso aconteça algum erro na leitura do arquivo
+            print("Nenhum problema cadastrado.\n")  # Informa que não existem problemas cadastrados
+            time.sleep(1.5)  # Espera 1,5 segundo
+
 
     if opcao == "4":
         # Edita os dados do problema cadastrado
